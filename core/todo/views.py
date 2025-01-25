@@ -12,6 +12,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 class TaskListView(LoginRequiredMixin , ListView):
     model = Task
     context_object_name = 'tasks'
+ 
+
+    def get_queryset(self):
+        return self.model.objects.filter(user=self.request.user)# Filters the queryset to only include objects that belong to the currently authenticated user
 
     
 class TaskCreateView(LoginRequiredMixin,CreateView):

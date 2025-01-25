@@ -1,3 +1,7 @@
 Django>=4.2,<5.0
 
-python-decouple
+django-filter==24.3
+
+djangorestframework==3.15.2
+
+python-decouple==3.8

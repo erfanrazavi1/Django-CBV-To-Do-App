@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'accounts',
     'todo',
     'rest_framework',
+    'django_filters',
     
 ]
 
@@ -132,3 +133,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = "/accounts/login"
+
+
+#django restframework
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}

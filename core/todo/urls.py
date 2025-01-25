@@ -3,7 +3,7 @@ from .views import *
 app_name  = 'taskApp'
 
 urlpatterns = [
-    path('home/' , TaskListView.as_view() , name ='task-view'),
+    path('' , TaskListView.as_view() , name ='task-view'),
     path('create' , TaskCreateView.as_view() , name ='task-create'),
     path('edit/<int:pk>' , EditTask.as_view() , name ='task-edit'),
     path('complete/<int:pk>' , CompleteTask.as_view() , name ='task-complete'),

@@ -51,5 +51,5 @@ class DeleteTask(LoginRequiredMixin,DeleteView):
         return self.delete(request, *args, **kwargs)#automate deleting without confirmation page
 
     def get_queryset(self):
-        return self.model.objects.filter(user=self.request.user)
+        return self.model.objects.filter(user=self.request.user)# Filters the queryset to only include objects that belong to the currently authenticated user
 

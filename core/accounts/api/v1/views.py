@@ -15,12 +15,8 @@ class RegistrationApiView(generics.GenericAPIView):
     def post(self,request , *args, **kwargs):
         serializer = CustomRegistrationSerializer(data = request.data)
         serializer.is_valid(raise_exception=True)
-
         user = serializer.save()
-        
-
         token , created = Token.objects.get_or_create(user = user)
-
         data = {
             'token': token.key,
             'user_id': user.pk,
@@ -35,10 +31,8 @@ class CustomAuthToken(ObtainAuthToken):
     def post(self,request,*args, **kwargs):
         serializer = self.serializer_class(data=request.data , context={'request' : request} )
         serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        user_obj = serializer.validated_data['user']
-        # user_obj = serializer.validated_data['user']
-        token , created = Token.objects.get_or_create(user=user_obj)
+        user = serializer.validated_data['user']
+        token , created = Token.objects.get_or_create(user=user)
         data = {
             'token' : token.key,
             'user_id' : user.pk,
@@ -46,7 +40,7 @@ class CustomAuthToken(ObtainAuthToken):
             'detail' : 'token is created successfully'
 
         }
-        return Response(data , status=status.HTTP_201_CREATED)
+        return Response(data , status=status.HTTP_200_OK)
 
 class CustomDiscardAuthToken(APIView):
     permission_classes = [IsAuthenticated]

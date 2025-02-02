@@ -5,8 +5,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework.exceptions import *
 from rest_framework import generics
-from .serializers import CustomRegistrationSerializer
+from .serializers import CustomRegistrationSerializer , ChangePasswordSerializer
 from rest_framework.response import Response
+from rest_framework_simplejwt.views import TokenObtainPairView
+from django.contrib.auth.models import User
 
 
 class RegistrationApiView(generics.GenericAPIView):
@@ -52,3 +54,28 @@ class CustomDiscardAuthToken(APIView):
         except (AttributeError, Token.DoesNotExist):
             return Response({"error": "Token does not exist or user is not authenticated."}, status=status.HTTP_400_BAD_REQUEST)
             
+class ChangePasswordApiView(generics.GenericAPIView):
+    serializer_class = ChangePasswordSerializer
+    permission_classes = [IsAuthenticated]
+    model = User
+
+    def get_object(self):
+        obj = self.request.user
+        return obj
+    
+    def put(self,request ,*args, **kwargs):
+        self.object = self.get_object()
+        serializer = ChangePasswordSerializer(data = request.data) 
+        if serializer.is_valid():
+            if not self.object.check_password(serializer.data.get("old_password")):
+                return Response({"old_password": ["Wrong password."]}, status=status.HTTP_400_BAD_REQUEST)
+
+            self.object.set_password(serializer.data.get("new_password"))
+            self.object.save()
+            response = {
+                'status' : 'success',
+                'message' : 'Password updated successfully',
+                'code' : status.HTTP_200_OK,
+            }
+            return Response(response)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

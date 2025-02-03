@@ -6,7 +6,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 '''
                 **************************************************************
 
-                                 Dear professor, 
+                                 Dear teacher, 
                 since you only mentioned adding these two topics,
                 I'm not sure if you meant to complete them fully or not. Because in that case,
                 I would need to use the email instead of the username.
@@ -29,8 +29,10 @@ urlpatterns = [
 
     #change pass
     path('change-password/' , ChangePasswordApiView.as_view() , name = 'change-password'),
-   
-
+    
+    
+    
+    
     #jwt login
     path('jwt/create/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('jwt/refresh/', TokenRefreshView.as_view(), name='token_refresh'),

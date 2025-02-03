@@ -10,3 +10,5 @@ drf-yasg
 
 djangorestframework-simplejwt
 
+django-mail-templated
+

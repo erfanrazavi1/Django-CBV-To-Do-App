@@ -30,7 +30,9 @@ urlpatterns = [
     #change pass
     path('change-password/' , ChangePasswordApiView.as_view() , name = 'change-password'),
     
-    
+    #reset password
+    path('token/reset-password/' , ResetPasswordApiView.as_view() , name = 'reset-password'),
+    path('token/reset-password/confirm/<str:token>' , ResetPasswordConfirmApiView.as_view() , name = 'reset-password'),
     
     
     #jwt login

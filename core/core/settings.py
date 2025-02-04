@@ -32,7 +32,7 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS',default ="*", cast=lambda v: [s.strip() f
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+   'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

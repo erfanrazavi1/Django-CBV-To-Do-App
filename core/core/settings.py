@@ -45,11 +45,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'django_filters',
     'drf_yasg',
-    'mail_templated'
-    
-    
-    
-]
+    'mail_templated',
+    ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

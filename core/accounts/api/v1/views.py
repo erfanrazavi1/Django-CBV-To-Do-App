@@ -7,13 +7,14 @@ from rest_framework.exceptions import *
 from rest_framework import generics
 from .serializers import CustomRegistrationSerializer , ChangePasswordSerializer , ResetPasswordSerializer , ResetPasswordConfirmSerializer
 from rest_framework.response import Response
-from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth.models import User
 from mail_templated import  EmailMessage
 from ..utils import EmailThread
 from django.shortcuts import get_object_or_404
 from rest_framework_simplejwt.tokens import RefreshToken
 import jwt
+from jwt.exceptions import ExpiredSignatureError, DecodeError, InvalidTokenError
+
 from django.conf import settings
 
 

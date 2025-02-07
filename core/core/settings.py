@@ -49,9 +49,6 @@ INSTALLED_APPS = [
     'mail_templated',
     ]
 
-    
-]
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

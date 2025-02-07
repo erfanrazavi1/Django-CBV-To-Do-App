@@ -26,11 +26,17 @@ drf-yasg[validation]  # Swagger & Redoc documentation for DRF
 python-decouple==3.8  # Managing environment variables & settings
 
 
+#==============================
+#Reformatting
+#==============================
+balck
+flake8
 
 #==============================
 #tests
 #==============================
-
-
 pytest
 pytest-django
+
+
+

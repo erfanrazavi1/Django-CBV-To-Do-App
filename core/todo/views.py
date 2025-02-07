@@ -1,55 +1,61 @@
-
 from django.shortcuts import redirect
 from django.views.generic import ListView
 from .models import Task
-from django.views.generic.edit import CreateView , UpdateView , DeleteView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-
-
-class TaskListView(LoginRequiredMixin , ListView):
+class TaskListView(LoginRequiredMixin, ListView):
     model = Task
-    context_object_name = 'tasks'
- 
+    context_object_name = "tasks"
 
     def get_queryset(self):
-        return self.model.objects.filter(user=self.request.user)# Filters the queryset to only include objects that belong to the currently authenticated user
+        return self.model.objects.filter(
+            user=self.request.user
+        )  # Filters the queryset to only include objects that belong to the currently authenticated user
 
-    
-class TaskCreateView(LoginRequiredMixin,CreateView):
+
+class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
-    fields = ['title']
-    success_url = '/'
+    fields = ["title"]
+    success_url = "/"
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        return super(TaskCreateView , self).form_valid(form)
-    
-class EditTask(LoginRequiredMixin,UpdateView):
-    model = Task
-    fields = ['title']
-    success_url = '/'
+        return super(TaskCreateView, self).form_valid(form)
 
-class CompleteTask(LoginRequiredMixin,View):
-    model = Task
-    success_url = '/'
 
-    def get(self,request,*args,**kwargs):
-        object = Task.objects.get(id=kwargs.get('pk'))
+class EditTask(LoginRequiredMixin, UpdateView):
+    model = Task
+    fields = ["title"]
+    success_url = "/"
+
+
+class CompleteTask(LoginRequiredMixin, View):
+    model = Task
+    success_url = "/"
+
+    def get(self, request, *args, **kwargs):
+        object = Task.objects.get(id=kwargs.get("pk"))
         object.complete = True
         object.save()
         return redirect(self.success_url)
-    
-class DeleteTask(LoginRequiredMixin,DeleteView):
+
+
+class DeleteTask(LoginRequiredMixin, DeleteView):
     model = Task
     context_object_name = "task"
-    success_url = '/'
+    success_url = "/"
 
-    def get(self, request, *args, **kwargs): #Not showing the confirmation page 
-        return self.delete(request, *args, **kwargs)#automate deleting without confirmation page
+    def get(
+        self, request, *args, **kwargs
+    ):  # Not showing the confirmation page
+        return self.delete(
+            request, *args, **kwargs
+        )  # automate deleting without confirmation page
 
     def get_queryset(self):
-        return self.model.objects.filter(user=self.request.user)# Filters the queryset to only include objects that belong to the currently authenticated user
-
+        return self.model.objects.filter(
+            user=self.request.user
+        )  # Filters the queryset to only include objects that belong to the currently authenticated user

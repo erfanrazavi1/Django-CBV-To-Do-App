@@ -1,4 +1,3 @@
-
 from django.contrib.auth.views import LoginView
 from django.views.generic.edit import FormView
 from django.contrib.auth.forms import UserCreationForm
@@ -6,20 +5,19 @@ from django.contrib.auth import login
 from django.shortcuts import redirect
 
 
-
-
 class CustomLoginView(LoginView):
 
     template_name = "accounts/login.html"
-    fields = "username","password"
+    fields = "username", "password"
     redirect_authenticated_user = True
-    success_url = '/'
+    success_url = "/"
+
 
 class RegisterPage(FormView):
     template_name = "accounts/register.html"
     form_class = UserCreationForm
     redirect_authenticated_user = True
-    success_url = '/'
+    success_url = "/"
 
     def form_valid(self, form):
         user = form.save()

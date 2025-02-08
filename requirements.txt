@@ -30,7 +30,6 @@ python-decouple==3.8  # Managing environment variables & settings
 #Reformatting
 #==============================
 black
-
 flake8
 
 #==============================

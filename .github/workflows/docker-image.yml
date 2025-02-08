@@ -19,5 +19,10 @@ jobs:
 
     - name: Setup Docker-Compose
       run: docker-compose up -d
+    - name: Wait for containers to be ready
+      run: sleep 10 
+
+    - name: Check Running Containers
+      run: docker ps     
     - name: Run Tests
       run: docker exec backend sh -c "flake8 && pytest ."

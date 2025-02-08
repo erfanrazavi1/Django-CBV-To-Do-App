@@ -25,4 +25,4 @@ jobs:
     - name: Check Running Containers
       run: docker ps     
     - name: Run Tests
-      run: docker exec backend sh -c "flake8 && pytest ."
+      run: docker-compose exec backend sh -c "flake8 && pytest ."

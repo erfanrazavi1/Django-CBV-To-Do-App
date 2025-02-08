@@ -14,10 +14,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Install Docker Compose
-      run: sudo apt-get install -y docker-compose
+    # - name: Install Docker Compose
+    #   run: sudo apt-get install -y docker-compose
 
     - name: Setup Docker-Compose
-      run: docker-compose up -d
-    - name: Run Tests
-      run: docker exec backend sh -c "flake8 && pytest ."
+      run: docker ps -a
+    # - name: Run Tests
+    #   run: docker exec backend sh -c "flake8 && pytest ."

@@ -32,7 +32,7 @@ python-decouple==3.8  # Managing environment variables & settings
 black
 flake8
 
-#==============================
+#=============================
 #tests
 #==============================
 pytest

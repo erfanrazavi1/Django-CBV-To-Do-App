@@ -1,10 +1,42 @@
-Django>=4.2,<5.0
-django-filter==24.3
-djangorestframework==3.14
-python-decouple==3.8
-drf-yasg[validation]
-djangorestframework-simplejwt
-django-mail-templated
-djangorestframework==3.15.2
-python-decouple==3.8
-drf-yasg[validation]
+# ===========================
+# Django Core Dependencies
+# ===========================
+Django>=4.2,<5.0  # Django framework (version 4.2 up to 5.0)
+
+# ===========================
+# Django Extensions & Add-ons
+# ===========================
+django-filter==24.3  # Filtering support for Django REST framework
+django-mail-templated  # Email templating for Django
+
+# ===========================
+# Django REST Framework (DRF)
+# ===========================
+djangorestframework==3.15.2  # Django REST Framework for building APIs
+djangorestframework-simplejwt  # JWT authentication for DRF
+
+# ===========================
+# API Documentation & Validation
+# ===========================
+drf-yasg[validation]  # Swagger & Redoc documentation for DRF
+
+# ===========================
+# Configuration & Environment Management
+# ===========================
+python-decouple==3.8  # Managing environment variables & settings
+
+
+#==============================
+#Reformatting
+#==============================
+balck
+flake8
+
+#==============================
+#tests
+#==============================
+pytest
+pytest-django
+
+
+

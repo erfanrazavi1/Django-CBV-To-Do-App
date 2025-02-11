@@ -45,4 +45,4 @@ Faker
 
 #--
 django-cors-headers
-
+locust

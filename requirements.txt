@@ -43,3 +43,6 @@ pytest-django
 Faker
 
 
+#--
+django-cors-headers
+

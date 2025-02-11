@@ -5,11 +5,13 @@ from todo.views import (
     EditTask,
     CompleteTask,
     DeleteTask,
+    TaskListApiView,
 )
 
 app_name = "taskApp"
 urlpatterns = [
     path("", TaskListView.as_view(), name="task-view"),
+    path("todo/api", TaskListApiView.as_view(), name="task-api-view"),
     path("create", TaskCreateView.as_view(), name="task-create"),
     path("edit/<int:pk>", EditTask.as_view(), name="task-edit"),
     path("complete/<int:pk>", CompleteTask.as_view(), name="task-complete"),

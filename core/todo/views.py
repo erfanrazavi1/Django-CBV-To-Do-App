@@ -1,5 +1,5 @@
 from django.shortcuts import redirect
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 from .models import Task
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views import View
@@ -48,9 +48,7 @@ class DeleteTask(LoginRequiredMixin, DeleteView):
     context_object_name = "task"
     success_url = "/"
 
-    def get(
-        self, request, *args, **kwargs
-    ):  # Not showing the confirmation page
+    def get(self, request, *args, **kwargs):  # Not showing the confirmation page
         return self.delete(
             request, *args, **kwargs
         )  # automate deleting without confirmation page
@@ -59,3 +57,7 @@ class DeleteTask(LoginRequiredMixin, DeleteView):
         return self.model.objects.filter(
             user=self.request.user
         )  # Filters the queryset to only include objects that belong to the currently authenticated user
+
+
+class TaskListApiView(TemplateView):
+    template_name = "todo/todo_list_api.html"

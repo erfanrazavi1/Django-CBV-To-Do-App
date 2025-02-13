@@ -6,6 +6,7 @@ import pytest
 class TestTodoList:
 
     def test_get_list(self, api_client, test_user, task_factory):
+        api_client.force_authenticate(user=test_user)
         """Tests if the API correctly retrieves the list of tasks."""
         task_factory(user=test_user, title="Task 1", complete=False)
         task_factory(user=test_user, title="Task 2", complete=True)
@@ -14,6 +15,7 @@ class TestTodoList:
         assert response.status_code == 200
 
     def test_get_task_detail(self, api_client, test_user, task_factory):
+        api_client.force_authenticate(user=test_user)
         """Tests if the API correctly retrieves a single task's details."""
         task = task_factory(
             user=test_user, title="Task Detail", complete=False

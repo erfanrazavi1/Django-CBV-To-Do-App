@@ -45,4 +45,9 @@ Faker
 
 #--
 django-cors-headers
-locust
+
+#background process and cache
+celery
+redis
+django-celery-beat
+

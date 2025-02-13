@@ -1,8 +1,10 @@
 from django.contrib.auth.views import LoginView
 from django.views.generic.edit import FormView
 from django.contrib.auth.forms import UserCreationForm
+from django.http import HttpResponse
 from django.contrib.auth import login
 from django.shortcuts import redirect
+from accounts.tasks import send_email_task
 
 
 class CustomLoginView(LoginView):
@@ -29,3 +31,8 @@ class RegisterPage(FormView):
         if self.request.user.is_authenticated:
             return redirect(self.success_url)
         return super(RegisterPage, self).get(*args, **kwargs)
+
+
+def send_email(request):
+    send_email_task.delay()
+    return HttpResponse("<h1>Done Sending</h1>")

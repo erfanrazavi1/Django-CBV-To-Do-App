@@ -3,6 +3,7 @@ services:
   redis:
     container_name: redis-todo
     image: redis
+    restart: always 
     ports:
       - "6379:6379"
     command: redis-server --save 60 1 --loglevel warning
@@ -19,6 +20,29 @@ services:
     environment:
       - SECRET_KEY=test
       - DEBUG=True
+    depends_on:
+      - redis
+  worker-1:
+    build: .
+    command: celery -A core worker --loglevel=info
+    volumes:
+      - ./core:/app
+    depends_on:
+      - redis
+      - backend
+  beat:
+    build: .
+    container_name: celery-beat
+    command: celery -A core beat --scheduler django_celery_beat.schedulers:DatabaseScheduler --loglevel=info
+    volumes:
+      - ./core:/app
+    depends_on:
+      - redis
+      - backend
+      - worker-1
+
+    
+
   smtp4dev:
     image: rnwood/smtp4dev:v3
     restart: always

@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "drf_yasg",
     "mail_templated",
     "corsheaders",
+    "django_celery_beat",
 ]
 
 MIDDLEWARE = [
@@ -173,3 +174,9 @@ EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 25
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+
+#celery conf
+CELERY_BROKER_URL = 'redis://redis:6379/1'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'

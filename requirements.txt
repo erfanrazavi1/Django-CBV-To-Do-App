@@ -46,3 +46,6 @@ Faker
 #--
 django-cors-headers
 
+#background process and cache
+celery
+redis

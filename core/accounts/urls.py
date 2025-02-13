@@ -1,9 +1,10 @@
 from django.urls import path, include
-from accounts.views import CustomLoginView, RegisterPage
+from accounts.views import CustomLoginView, RegisterPage, send_email
 from django.contrib.auth.views import LogoutView
 
 app_name = "accounts"
 urlpatterns = [
+    path('todo/send-email/', send_email, name='send-email'),
     path("login/", CustomLoginView.as_view(), name="login"),
     path(
         "logout/",

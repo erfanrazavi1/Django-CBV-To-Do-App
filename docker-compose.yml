@@ -30,6 +30,17 @@ services:
     depends_on:
       - redis
       - backend
+  beat:
+    build: .
+    container_name: celery-beat
+    command: celery -A core beat --scheduler django_celery_beat.schedulers:DatabaseScheduler --loglevel=info
+    volumes:
+      - ./core:/app
+    depends_on:
+      - redis
+      - backend
+      - worker-1
+
     
 
   smtp4dev:

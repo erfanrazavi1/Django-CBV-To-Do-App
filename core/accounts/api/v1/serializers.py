@@ -26,9 +26,7 @@ class CustomRegistrationSerializer(serializers.ModelSerializer):
         the password meets Django's security requirements.
         """
         if attrs["password"] != attrs["password1"]:
-            raise serializers.ValidationError(
-                {"detail": "Passwords do not match"}
-            )
+            raise serializers.ValidationError({"detail": "Passwords do not match"})
         try:
             # Validate password strength
             validate_password(attrs.get("password"))
@@ -65,16 +63,12 @@ class ChangePasswordSerializer(serializers.Serializer):
         and checks the new password's strength.
         """
         if attrs.get("new_password") != attrs.get("new_password1"):
-            raise serializers.ValidationError(
-                {"detail": "Passwords do not match"}
-            )
+            raise serializers.ValidationError({"detail": "Passwords do not match"})
         try:
             # Validate the new password strength
             validate_password(attrs.get("new_password"))
         except ValidationError as e:
-            raise serializers.ValidationError(
-                {"new_password": list(e.messages)}
-            )
+            raise serializers.ValidationError({"new_password": list(e.messages)})
         return super().validate(attrs)
 
 
@@ -93,9 +87,7 @@ class ResetPasswordSerializer(serializers.Serializer):
         """
         email = attrs.get("email")
         if not email:
-            raise serializers.ValidationError(
-                {"email": "This field is required."}
-            )
+            raise serializers.ValidationError({"email": "This field is required."})
         return attrs
 
 
@@ -117,14 +109,10 @@ class ResetPasswordConfirmSerializer(serializers.Serializer):
         and checks the strength of the new password.
         """
         if attrs.get("new_password") != attrs.get("new_password1"):
-            raise serializers.ValidationError(
-                {"detail": "Passwords do not match"}
-            )
+            raise serializers.ValidationError({"detail": "Passwords do not match"})
         try:
             # Validate the strength of the new password
             validate_password(attrs.get("new_password"))
         except ValidationError as e:
-            raise serializers.ValidationError(
-                {"new_password": list(e.messages)}
-            )
+            raise serializers.ValidationError({"new_password": list(e.messages)})
         return attrs

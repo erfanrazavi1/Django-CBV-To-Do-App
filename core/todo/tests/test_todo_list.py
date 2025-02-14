@@ -17,9 +17,7 @@ class TestTodoList:
     def test_get_task_detail(self, api_client, test_user, task_factory):
         api_client.force_authenticate(user=test_user)
         """Tests if the API correctly retrieves a single task's details."""
-        task = task_factory(
-            user=test_user, title="Task Detail", complete=False
-        )
+        task = task_factory(user=test_user, title="Task Detail", complete=False)
         url = reverse("taskApp:api-v1:todo-detail", kwargs={"pk": task.id})
         response = api_client.get(url)
         assert response.status_code == 200
@@ -37,9 +35,7 @@ class TestTodoList:
     def test_update_task(self, api_client, test_user, task_factory):
         """Tests if an authenticated user can update an existing task."""
         api_client.force_authenticate(user=test_user)
-        task = task_factory(
-            user=test_user, title="Task Detail", complete=False
-        )
+        task = task_factory(user=test_user, title="Task Detail", complete=False)
         url = reverse("taskApp:api-v1:todo-detail", kwargs={"pk": task.id})
         data = {
             "user": test_user.id,
@@ -54,9 +50,7 @@ class TestTodoList:
     def test_delete_task(self, api_client, test_user, task_factory):
         """Tests if an authenticated user can delete a task."""
         api_client.force_authenticate(user=test_user)
-        task = task_factory(
-            user=test_user, title="Task to Delete", complete=False
-        )
+        task = task_factory(user=test_user, title="Task to Delete", complete=False)
         url = reverse("taskApp:api-v1:todo-detail", kwargs={"pk": task.id})
         response = api_client.delete(url)
         assert response.status_code == 204

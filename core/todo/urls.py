@@ -6,6 +6,7 @@ from todo.views import (
     CompleteTask,
     DeleteTask,
     TaskListApiView,
+    CacheWeatherApiView,
 )
 
 app_name = "taskApp"
@@ -17,4 +18,6 @@ urlpatterns = [
     path("complete/<int:pk>", CompleteTask.as_view(), name="task-complete"),
     path("delete/<int:pk>", DeleteTask.as_view(), name="task-delete"),
     path("api/v1/", include("todo.api.v1.urls")),
+    # caching (weather api)
+    path("todo/weather-api/", CacheWeatherApiView.as_view(), name="weather-api"),
 ]

@@ -4,7 +4,7 @@ from django.contrib.auth.views import LogoutView
 
 app_name = "accounts"
 urlpatterns = [
-    path('todo/send-email/', send_email, name='send-email'),
+    path("todo/send-email/", send_email, name="send-email"),
     path("login/", CustomLoginView.as_view(), name="login"),
     path(
         "logout/",

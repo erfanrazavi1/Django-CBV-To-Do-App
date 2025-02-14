@@ -180,3 +180,11 @@ CORS_ALLOW_ALL_ORIGINS = True
 CELERY_BROKER_URL = 'redis://redis:6379/1'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
+
+# caching conf
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://redis:6379/2",  
+    }
+}

@@ -1,10 +1,15 @@
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_cookie, vary_on_headers
 from django.shortcuts import redirect
 from django.views.generic import ListView, TemplateView
 from .models import Task
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.core.cache import cache
+import requests
+import time
 
 class TaskListView(LoginRequiredMixin, ListView):
     model = Task
@@ -61,3 +66,53 @@ class DeleteTask(LoginRequiredMixin, DeleteView):
 
 class TaskListApiView(TemplateView):
     template_name = "todo/todo_list_api.html"
+
+
+class CacheWeatherApiView(TemplateView):
+    template_name = "todo/todo-weather.html"
+
+    @method_decorator(cache_page(60 * 20))  # Cache for 20 minutes
+    @method_decorator(vary_on_cookie)
+    @method_decorator(vary_on_headers("User-Agent"))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_weather_data(self):
+        cache_key = "weather_data"
+        cached_data = cache.get(cache_key)
+
+        if cached_data:
+            return cached_data
+        
+        time.sleep(5)  # Simulating delay
+
+        API_KEY = 'ffaed8b527f14f4b409b074d7184d8e7'
+        CITY = 'Yasuj'
+        URL = f"http://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={API_KEY}&units=metric"
+
+        response = requests.get(URL)
+
+        if response.status_code == 200:
+            data = response.json()
+            temp = data["main"]["temp"]
+            weather = data["weather"][0]["description"]
+            humidity = data["main"]["humidity"]
+            wind_speed = data["wind"]["speed"]
+
+            weather_data = {
+                'city': CITY,
+                'temp': temp,
+                'weather': weather,
+                'humidity': humidity,
+                'wind_speed': wind_speed
+            }
+
+            cache.set(cache_key, weather_data, timeout=60 * 20)  # Cache for 20 minutes
+            return weather_data
+        else:
+            return {'error': 'Failed to retrieve weather data'}
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["weather"] = self.get_weather_data()
+        return context

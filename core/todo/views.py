@@ -11,6 +11,7 @@ from django.core.cache import cache
 import requests
 import time
 
+
 class TaskListView(LoginRequiredMixin, ListView):
     model = Task
     context_object_name = "tasks"
@@ -83,11 +84,11 @@ class CacheWeatherApiView(TemplateView):
 
         if cached_data:
             return cached_data
-        
+
         time.sleep(5)  # Simulating delay
 
-        API_KEY = 'ffaed8b527f14f4b409b074d7184d8e7'
-        CITY = 'Yasuj'
+        API_KEY = "ffaed8b527f14f4b409b074d7184d8e7"
+        CITY = "Yasuj"
         URL = f"http://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={API_KEY}&units=metric"
 
         response = requests.get(URL)
@@ -100,17 +101,17 @@ class CacheWeatherApiView(TemplateView):
             wind_speed = data["wind"]["speed"]
 
             weather_data = {
-                'city': CITY,
-                'temp': temp,
-                'weather': weather,
-                'humidity': humidity,
-                'wind_speed': wind_speed
+                "city": CITY,
+                "temp": temp,
+                "weather": weather,
+                "humidity": humidity,
+                "wind_speed": wind_speed,
             }
 
             cache.set(cache_key, weather_data, timeout=60 * 20)  # Cache for 20 minutes
             return weather_data
         else:
-            return {'error': 'Failed to retrieve weather data'}
+            return {"error": "Failed to retrieve weather data"}
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

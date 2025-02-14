@@ -6,47 +6,82 @@
     <title>Weather in {{ weather.city }}</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #2193b0, #6dd5ed);
             color: #fff;
             text-align: center;
             padding: 20px;
             margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
         .container {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 10px;
-            width: 50%;
-            margin: auto;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+            padding: 30px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 400px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
         }
         h1 {
-            margin-bottom: 10px;
-            font-size: 26px;
+            margin-bottom: 15px;
+            font-size: 28px;
         }
         .weather-info {
-            font-size: 18px;
-            margin: 10px 0;
+            font-size: 20px;
+            margin: 15px 0;
         }
         .error {
             color: #ff4d4d;
             font-weight: bold;
+        }
+        .animated-number {
+            font-weight: bold;
+            font-size: 24px;
+            color: #ffeb3b;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Weather in {{ weather.city }}</h1>
-
         {% if weather.error %}
             <p class="error">Error: {{ weather.error }}</p>
         {% else %}
-            <p class="weather-info"><strong>Temperature:</strong> {{ weather.temp }}°C</p>
+            <p class="weather-info"><strong>Temperature:</strong> <span class="animated-number" data-value="{{ weather.temp }}">0</span>°C</p>
             <p class="weather-info"><strong>Condition:</strong> {{ weather.weather }}</p>
-            <p class="weather-info"><strong>Humidity:</strong> {{ weather.humidity }}%</p>
-            <p class="weather-info"><strong>Wind Speed:</strong> {{ weather.wind_speed }} m/s</p>
+            <p class="weather-info"><strong>Humidity:</strong> <span class="animated-number" data-value="{{ weather.humidity }}">0</span>%</p>
+            <p class="weather-info"><strong>Wind Speed:</strong> <span class="animated-number" data-value="{{ weather.wind_speed }}">0</span> m/s</p>
         {% endif %}
     </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const animateNumbers = (element, start, end, duration) => {
+                let startTime;
+                
+                const step = (timestamp) => {
+                    if (!startTime) startTime = timestamp;
+                    const progress = Math.min((timestamp - startTime) / duration, 1);
+                    element.textContent = Math.floor(progress * (end - start) + start);
+                    if (progress < 1) {
+                        requestAnimationFrame(step);
+                    } else {
+                        element.textContent = end;
+                    }
+                };
+                
+                requestAnimationFrame(step);
+            };
+            
+            document.querySelectorAll(".animated-number").forEach((el) => {
+                const endValue = parseInt(el.getAttribute("data-value"), 10);
+                animateNumbers(el, 0, endValue, 1500);
+            });
+        });
+    </script>
 </body>
 </html>

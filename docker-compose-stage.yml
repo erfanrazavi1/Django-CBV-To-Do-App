@@ -22,10 +22,28 @@ services:
     environment:
       - SECRET_KEY=test
       - DEBUG=False
+      - DB_NAME=todo_django_db
+      - DB_USER=erfan
+      - DB_PASSWORD=ZxCv@#1234567
+      - DB_HOST=db
+      - DB_PORT=5432
     expose:
       - "8000"
     depends_on:
       - redis
+      - db
+  db:
+    image: postgres
+    container_name: postgres
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=erfan
+      - POSTGRES_PASSWORD=ZxCv@#1234567
+      - POSTGRES_DB=todo_django_db
+
+
   nginx:
     image: nginx
     container_name: nginx-todo
@@ -75,6 +93,7 @@ services:
 volumes:
   static_volume:
   media_volume:
+  postgres_data:
 
 
       

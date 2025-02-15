@@ -38,3 +38,7 @@ requests
 
 # Deployment
 gunicorn
+
+# Database
+psycopg2-binary
+
